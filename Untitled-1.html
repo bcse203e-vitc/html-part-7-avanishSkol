@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <input type="number" id="userGuess" min="1" max="100">
+        <button onclick="checkGuess()">Guess</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsLeft = 5;
+
+        function checkGuess() {
+            const userGuess = document.getElementById('userGuess').value;
+            const messageElement = document.getElementById('message');
+
+            if (userGuess === '') {
+                messageElement.textContent = 'Please enter a number!';
+                messageElement.style.color = 'red';
+                return;
+            }
+
+            if (userGuess < 1 || userGuess > 100) {
+                messageElement.textContent = 'Please guess a number between 1 and 100.';
+                messageElement.style.color = 'red';
+                return;
+            }
+
+            attemptsLeft--;
+
+            if (userGuess == randomNumber) {
+                messageElement.textContent = 'Congratulations! You guessed the number!';
+                messageElement.style.color = 'green';
+                document.querySelector('button').disabled = true; // Disable the button after success
+            } else if (userGuess < randomNumber) {
+                messageElement.textContent = `Too low! You have ${attemptsLeft} attempts left.`;
+                messageElement.style.color = 'blue';
+            } else {
+                messageElement.textContent = `Too high! You have ${attemptsLeft} attempts left.`;
+                messageElement.style.color = 'blue';
+            }
+
+            if (attemptsLeft === 0 && userGuess != randomNumber) {
+                messageElement.textContent = `Game Over! The number was ${randomNumber}.`;
+                messageElement.style.color = 'red';
+                document.querySelector('button').disabled = true; // Disable the button after failure
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Second and Third Largest Numbers</title>
+</head>
+<body>
+    <h1>Find Second and Third Largest Numbers in an Array</h1>
+
+    <label for="arrayInput">Enter array elements (comma separated):</label>
+    <input type="text" id="arrayInput" placeholder="e.g., 1, 2, 3, 4, 5, 6">
+
+    <button onclick="findLargestNumbers()">Find Second and Third Largest</button>
+
+    <h3>Results:</h3>
+    <div id="result"></div>
+
+    <script>
+        function findLargestNumbers() {
+            const userInput = document.getElementById('arrayInput').value.trim();
+            const array = userInput.split(',').map(item => parseInt(item.trim()));
+
+            if (array.length < 3 || array.some(isNaN)) {
+                document.getElementById('result').innerHTML = 'Please enter at least 3 valid numbers.';
+                return;
+            }
+
+            let firstLargest = -Infinity;
+            let secondLargest = -Infinity;
+            let thirdLargest = -Infinity;
+
+            array.forEach(num => {
+                if (num > firstLargest) {
+                    thirdLargest = secondLargest;
+                    secondLargest = firstLargest;
+                    firstLargest = num;
+                } else if (num > secondLargest && num < firstLargest) {
+                    thirdLargest = secondLargest;
+                    secondLargest = num;
+                } else if (num > thirdLargest && num < secondLargest) {
+                    thirdLargest = num;
+                }
+            });
+
+            let resultText = `Second Largest: ${secondLargest}<br>Third Largest: ${thirdLargest}`;
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
