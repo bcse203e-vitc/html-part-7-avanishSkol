@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Array Without sort() Method</title>
+</head>
+<body>
+    <h1>Sort Array Without Using sort() Method</h1>
+
+    <label for="arrayInput">Enter array elements (comma separated):</label>
+    <input type="text" id="arrayInput" placeholder="e.g., 5, 2, 8, 3, 1">
+
+    <label for="sortOrder">Select sort order:</label>
+    <select id="sortOrder">
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
+    </select>
+
+    <button onclick="sortArray()">Sort Array</button>
+
+    <h3>Sorted Array:</h3>
+    <div id="result"></div>
+
+    <script>
+        function sortArray() {
+            const userInput = document.getElementById('arrayInput').value.trim();
+            const array = userInput.split(',').map(item => parseInt(item.trim()));
+
+            if (array.length === 0 || array.some(isNaN)) {
+                document.getElementById('result').innerHTML = 'Please enter a valid array of numbers.';
+                return;
+            }
+
+            const sortOrder = document.getElementById('sortOrder').value;
+
+            for (let i = 0; i < array.length; i++) {
+                for (let j = i + 1; j < array.length; j++) {
+                    if ((sortOrder === 'ascending' && array[i] > array[j]) || 
+                        (sortOrder === 'descending' && array[i] < array[j])) {
+                        const temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                }
+            }
+
+            document.getElementById('result').innerHTML = `Sorted Array: [${array.join(', ')}]`;
+        }
+    </script>
+</body>
+</html>

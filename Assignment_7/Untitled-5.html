@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Counter</title>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Character Counter</h1>
+        <label for="userInput">Enter text:</label>
+        <textarea id="userInput" rows="6" placeholder="Type something here..." oninput="countCharactersAndWords()"></textarea>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function countCharactersAndWords() {
+            const userInput = document.getElementById('userInput').value;
+
+            const charCount = userInput.length;
+
+            const words = userInput.trim().split(/\s+/).filter(Boolean);
+            const wordCount = words.length;
+
+            const wordFrequency = {};
+            words.forEach(word => {
+                word = word.toLowerCase(); 
+                wordFrequency[word] = (wordFrequency[word] || 0) + 1;
+            });
+
+            const repeatedWords = Object.keys(wordFrequency).filter(word => wordFrequency[word] > 1);
+
+            let resultText = `Character count (including spaces): ${charCount}<br>Word count: ${wordCount}<br><br>`;
+            if (repeatedWords.length > 0) {
+                resultText += `Repeated words (and their count):<br>`;
+                repeatedWords.forEach(word => {
+                    resultText += `${word}: ${wordFrequency[word]} times<br>`;
+                });
+            } else {
+                resultText += `No repeated words found.`;
+            }
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
